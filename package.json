@@ -6,26 +6,26 @@
   "description": "",
   "scripts": {
     "build": "bun run build.mjs",
-    "prepublishOnly": "bun run build"
+    "prepublishOnly": "bun run build",
+    "biome": "biome",
+    "lint": "dprint check && biome lint",
+    "format": "dprint fmt"
   },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "bun"
-  ],
+  "files": ["dist"],
+  "keywords": ["bun", "config"],
   "license": "MIT",
-  "homepage": "https://github.com/wobsoriano/pkg-name#readme",
+  "homepage": "github.com/MartynasZilinskas/dotconfig#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wobsoriano/pkg-name.git"
+    "url": "git+github.com/MartynasZilinskas/dotconfig.git"
   },
-  "bugs": "https://github.com/wobsoriano/pkg-name/issues",
-  "author": "Robert Soriano <sorianorobertc@gmail.com>",
+  "bugs": "github.com/MartynasZilinskas/dotconfig/issues",
+  "author": "Martynas Zilinskas <hello@martynas.me>",
   "devDependencies": {
-    "bun-plugin-dts": "^0.2.1",
-    "@types/bun": "^1.0.0",
-    "typescript": "^5.2.2"
-  },
-  "packageManager": "npm@10.8.2+sha512.c7f0088c520a46596b85c6f8f1da943400199748a0f7ea8cb8df75469668dc26f6fb3ba26df87e2884a5ebe91557292d0f3db7d0929cdb4f14910c3032ac81fb"
+    "@biomejs/biome": "1.8.3",
+    "@types/bun": "1.0.0",
+    "bun-plugin-dts": "0.2.1",
+    "dprint": "0.47.2",
+    "typescript": "5.2.2"
+  }
 }

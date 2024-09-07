@@ -1,3 +1,3 @@
 export interface ConfigurationProvider {
-    load(): Promise<Record<string, unknown>>;
+  load(): Promise<Record<string, unknown>>;
 }

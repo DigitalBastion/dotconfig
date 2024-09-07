@@ -1,31 +1,22 @@
 {
-  "name": "dotconfig",
-  "version": "0.0.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "description": "",
+  "name": "dotconfig-workspace",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "build": "bun run build.mjs",
-    "prepublishOnly": "bun run build",
     "biome": "biome",
-    "lint": "dprint check && biome lint",
-    "format": "dprint fmt"
+    "lint": "sherif && dprint check && biome lint",
+    "format": "dprint fmt",
+    "build": "bun --filter '*' build",
+    "test": "bun --filter '*' test"
   },
-  "files": ["dist"],
-  "keywords": ["bun", "config"],
-  "license": "MIT",
-  "homepage": "github.com/MartynasZilinskas/dotconfig#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+github.com/MartynasZilinskas/dotconfig.git"
-  },
-  "bugs": "github.com/MartynasZilinskas/dotconfig/issues",
-  "author": "Martynas Zilinskas <hello@martynas.me>",
   "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "dependencies": {
     "@biomejs/biome": "1.8.3",
-    "@types/bun": "1.0.0",
-    "bun-plugin-dts": "0.2.1",
     "dprint": "0.47.2",
-    "typescript": "5.2.2"
+    "sherif": "1.0.0"
   }
 }

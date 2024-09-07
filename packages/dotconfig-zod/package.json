@@ -1,0 +1,35 @@
+{
+  "name": "dotconfig-zod",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "description": "",
+  "scripts": {
+    "build": "bun run build.mjs",
+    "prepublishOnly": "bun run build",
+    "test": "bun test"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "bun",
+    "config"
+  ],
+  "license": "MIT",
+  "homepage": "github.com/MartynasZilinskas/dotconfig#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+github.com/MartynasZilinskas/dotconfig.git"
+  },
+  "bugs": "github.com/MartynasZilinskas/dotconfig/issues",
+  "author": "Martynas Zilinskas <hello@martynas.me>",
+  "peerDependencies": {
+    "zod": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "1.0.0",
+    "bun-plugin-dts": "0.2.1",
+    "typescript": "5.2.2"
+  }
+}

@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import { ConfigurationBuilder } from "../src/configuration-builder.js";
 
 test("It should produce configuration instance.", async () => {
-  const builder = new ConfigurationBuilder().addInMemory({
+  const builder = new ConfigurationBuilder().addInMemoryObject({
     Logging: {
       Enabled: true,
       LogLevel: "Info",

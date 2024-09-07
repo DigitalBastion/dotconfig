@@ -30,7 +30,7 @@ export class ConfigurationBuilder {
     return this;
   }
 
-  public addInMemory(data: Record<string, unknown>): this {
+  public addInMemoryObject(data: Record<string, unknown>): this {
     const provider = new InMemoryConfigurationProvider(data);
     this.providers.push(provider);
     return this;

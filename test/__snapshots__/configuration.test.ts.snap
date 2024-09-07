@@ -1,0 +1,20 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`It should produce configuration instance. 1`] = `
+{
+  "App": {
+    "Settings": {
+      "Name": "TestApp",
+      "Version": "1.0.0",
+    },
+  },
+  "Database": {
+    "ConnectionString": "test_connection",
+    "MaxConnections": "100",
+  },
+  "Logging": {
+    "Enabled": "true",
+    "LogLevel": "Info",
+  },
+}
+`;

@@ -1,6 +1,6 @@
-import type { IConfigurationProvider, IConfigurationRoot, IConfigurationSection } from "./abstractions";
-import { combine } from "./configuration-path";
-import { ConfigurationSection } from "./configuration-section";
+import type { IConfigurationProvider, IConfigurationRoot, IConfigurationSection } from "./abstractions.js";
+import { combine } from "./configuration-path.js";
+import { ConfigurationSection } from "./configuration-section.js";
 
 export class ConfigurationRoot implements IConfigurationRoot {
     public constructor(providers: IConfigurationProvider[]) {
@@ -15,7 +15,7 @@ export class ConfigurationRoot implements IConfigurationRoot {
 
     public get(key: string): string | null {
         for (let i = this.#providers.length - 1; i >= 0; i--) {
-            const value = this.#providers[i].get(key);
+            const value = this.#providers[i]?.get(key);
             if (value === undefined) {
                 continue;
             }
@@ -36,11 +36,11 @@ export class ConfigurationRoot implements IConfigurationRoot {
         }
     }
 
-    public getSection(key: string) {
+    public getSection(key: string): IConfigurationSection {
         return new ConfigurationSection(this, key);
     }
 
-    public async reload() {
+    public async reload(): Promise<void> {
         // TODO: Fix.
 
         for (const provider of this.#providers) {

@@ -1,5 +1,5 @@
-import type { IConfigurationRoot, IConfigurationSection } from "./abstractions";
-import { getSectionKey, combine } from "./configuration-path";
+import type { IConfigurationRoot, IConfigurationSection } from "./abstractions.js";
+import { getSectionKey, combine } from "./configuration-path.js";
 
 export class ConfigurationSection implements IConfigurationSection {
     constructor(root: IConfigurationRoot, path: string) {

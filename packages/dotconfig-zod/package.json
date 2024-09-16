@@ -1,13 +1,22 @@
 {
   "name": "dotconfig-zod",
   "version": "0.0.0",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "description": "",
   "scripts": {
-    "build": "bun run build.mjs",
+    "build": "tsc -p . ",
     "prepublishOnly": "bun run build",
-    "test": "bun test"
+    "test": "bun test",
+    "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
   },
   "files": [
     "dist"
@@ -27,9 +36,13 @@
   "peerDependencies": {
     "zod": "^3.0.0"
   },
+  "dependencies": {
+    "dotconfig": "workspace:*"
+  },
   "devDependencies": {
     "@types/bun": "1.0.0",
     "bun-plugin-dts": "0.2.1",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "@arethetypeswrong/cli": "0.16.2"
   }
 }

@@ -2,7 +2,7 @@ import { test, expect, describe } from "bun:test";
 import { MemoryConfigurationSource } from "../src/providers/memory";
 import { ConfigurationBuilder } from "../src/configuration-builder";
 import { ChainedConfigurationProvider, ChainedConfigurationSource } from "../src/providers/chained-configuration";
-import { getConfigurationEntries } from "../src/helpers";
+import { iterateConfigurationEntries } from "../src/helpers";
 
 test("Load and combine key value pairs from different configuration providers", async () => {
     const dic1 = new Map<string, string>([
@@ -146,7 +146,7 @@ test.each([true, false])("Chained getConfigurationEntries flattens into dictiona
         .add(memConfigSrc3)
         .build();
 
-    const dict = Object.fromEntries(getConfigurationEntries(config, removePath));
+    const dict = Object.fromEntries(iterateConfigurationEntries(config, removePath));
 
     // Assert
     expect(dict).toMatchSnapshot();

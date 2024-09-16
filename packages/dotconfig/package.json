@@ -1,13 +1,30 @@
 {
   "name": "dotconfig",
   "version": "0.0.0",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./providers/*": {
+      "default": "./dist/providers/*",
+      "types": "./dist/providers/*"
+    },
+    "./abstractions": {
+      "default": "./dist/abstractions.js",
+      "types": "./dist/abstractions.d.ts"
+    }
+  },
   "description": "",
   "scripts": {
-    "build": "bun run build.mjs",
+    "build": "tsc -p . ",
     "prepublishOnly": "bun run build",
-    "test": "bun test"
+    "test": "bun test",
+    "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
   },
   "files": [
     "dist"
@@ -26,7 +43,7 @@
   "author": "Martynas Zilinskas <hello@martynas.me>",
   "devDependencies": {
     "@types/bun": "1.0.0",
-    "bun-plugin-dts": "0.2.1",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "@arethetypeswrong/cli": "0.16.2"
   }
 }

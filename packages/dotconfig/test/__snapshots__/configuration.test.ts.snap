@@ -1,24 +1,5 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`It should produce configuration instance. 1`] = `
-{
-  "App": {
-    "Settings": {
-      "Name": "TestApp",
-      "Version": "1.0.0",
-    },
-  },
-  "Database": {
-    "ConnectionString": "test_connection",
-    "MaxConnections": "100",
-  },
-  "Logging": {
-    "Enabled": "true",
-    "LogLevel": "Info",
-  },
-}
-`;
-
 exports[`Chained getConfigurationEntries flattens into dictionary (removePath: %s) 1`] = `
 {
   "Mem1": "Value1",
@@ -50,5 +31,14 @@ exports[`Chained getConfigurationEntries flattens into dictionary (removePath: %
   "Mem3:": "NoKeyValue3",
   "Mem3:KeyInMem3": "ValueInMem3",
   "Mem3:KeyInMem3:Deep3": "ValueDeep3",
+}
+`;
+
+exports[`Get configuration nested object 1`] = `
+{
+  "0": "NoKeyValue1",
+  "Deep1": "ValueDeep1",
+  "KeyInMem1": "ValueInMem1",
+  "Mem1": "Value1",
 }
 `;

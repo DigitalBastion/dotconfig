@@ -1,6 +1,6 @@
-import type { IConfigurationProvider } from "./abstractions";
-import { ConfigurationData } from "./configuration-data";
-import { compare, KEY_DELIMITER } from "./configuration-path";
+import type { IConfigurationProvider } from "./abstractions.js";
+import { ConfigurationData } from "./configuration-data.js";
+import { compare, KEY_DELIMITER } from "./configuration-path.js";
 
 export class ConfigurationProvider implements IConfigurationProvider {
     protected readonly data = new ConfigurationData();

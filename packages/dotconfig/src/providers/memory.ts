@@ -1,6 +1,6 @@
-import type { IConfigurationProvider } from "../abstractions";
-import { ConfigurationProvider } from "../configuration-provider";
-import { ConfigurationSource } from "../configuration-source";
+import type { IConfigurationProvider } from "../abstractions.js";
+import { ConfigurationProvider } from "../configuration-provider.js";
+import { ConfigurationSource } from "../configuration-source.js";
 
 export class MemoryConfigurationSource extends ConfigurationSource {
   constructor(config: Map<string, string>) {
@@ -30,7 +30,7 @@ export class MemoryConfigurationProvider extends ConfigurationProvider {
 
   #source: MemoryConfigurationSource;
 
-  public load(): Promise<void> {
+  public override load(): Promise<void> {
     for (const [key, value] of this.#source.config) {
       this.set(key, value);
     }

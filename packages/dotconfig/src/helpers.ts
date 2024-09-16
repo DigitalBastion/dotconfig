@@ -1,9 +1,9 @@
-import type { IConfiguration, IConfigurationSection } from "./abstractions";
+import type { IConfiguration, IConfigurationSection } from "./abstractions.js";
 
-export function* getConfigurationEntries(
+export function* iterateConfigurationEntries(
     configuration: IConfiguration,
     makePathsRelative = false
-) {
+): Iterable<readonly [string, string | null]> {
     const stack: IConfiguration[] = [configuration];
     const prefixLength = (makePathsRelative && isConfigurationSection(configuration))
         ? configuration.path.length + 1

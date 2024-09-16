@@ -44,7 +44,15 @@ export function flatten(target: NestedObject, options: FlattenOptions = {}) {
   return result;
 }
 
-function getKey(key: string): string | number {
+function parseKey(key: string | undefined): string | number {
+  if (key === undefined) {
+    throw new Error("Key cannot be undefined.");
+  }
+
+  if (key === "") {
+    return key;
+  }
+
   const parsedKey = Number(key);
 
   if (Number.isNaN(parsedKey) || key.indexOf(".") !== -1) {
@@ -71,26 +79,31 @@ export function unflatten(target: Map<string, unknown>, options: FlattenOptions 
   const transformKey = options.transformKey ?? ((key) => key);
   const result: NestedObject = {};
 
-  for (const [key, value] of target.entries()) {
+  keyFor: for (const [key, value] of target.entries()) {
     const keys = key.split(delimiter).map(transformKey);
     let currentObj = result;
 
     for (let i = 0; i < keys.length; i++) {
-      const currentKey = getKey(keys[i]);
+      const currentKey = parseKey(keys[i]);
 
       if (i === keys.length - 1) {
         currentObj[currentKey] = value;
-      } else {
-        const nextKey = getKey(keys[i + 1]);
-
-        if (!(currentKey in currentObj)) {
-          currentObj[currentKey] = typeof nextKey === "number" ? [] : {};
-        } else if (isEmpty(currentObj[currentKey])) {
-          currentObj[currentKey] = typeof nextKey === "number" ? [] : {};
-        }
-
-        currentObj = currentObj[currentKey] as NestedObject;
+        continue;
       }
+
+      const nextKey = parseKey(keys[i + 1]);
+
+      if (!(currentKey in currentObj)) {
+        currentObj[currentKey] = typeof nextKey === "number" ? [] : {};
+      } else if (isEmpty(currentObj[currentKey])) {
+        currentObj[currentKey] = typeof nextKey === "number" ? [] : {};
+      }
+
+      if (typeof currentObj[currentKey] !== "object") {
+        continue keyFor;
+      }
+
+      currentObj = currentObj[currentKey] as NestedObject;
     }
   }
 

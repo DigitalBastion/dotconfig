@@ -1,5 +1,5 @@
-import type { IConfiguration, IConfigurationProvider, IConfigurationSource } from "../abstractions";
-import { compare } from "../configuration-path";
+import type { IConfiguration, IConfigurationProvider, IConfigurationSource } from "../abstractions.js";
+import { compare } from "../configuration-path.js";
 
 export class ChainedConfigurationSource implements IConfigurationSource {
     constructor(configuration: IConfiguration) {

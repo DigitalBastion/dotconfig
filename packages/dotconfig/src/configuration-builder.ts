@@ -1,5 +1,5 @@
-import type { IConfigurationBuilder, IConfigurationProvider, IConfigurationSource } from "./abstractions";
-import { ConfigurationRoot } from "./configuration-root";
+import type { IConfigurationBuilder, IConfigurationProvider, IConfigurationSource } from "./abstractions.js";
+import { ConfigurationRoot } from "./configuration-root.js";
 
 export class ConfigurationBuilder implements IConfigurationBuilder {
     #sources: IConfigurationSource[] = [];

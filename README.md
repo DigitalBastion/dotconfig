@@ -6,7 +6,7 @@ A powerful configuration builder using various sources: environment variables, l
 
 - [x] In memory
 - [x] Environment variables
-- [] Json file
+- [ ] Json file
 
 ## Getting Started
 

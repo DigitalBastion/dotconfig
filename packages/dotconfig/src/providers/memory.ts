@@ -3,12 +3,12 @@ import { ConfigurationProvider } from "../configuration-provider.js";
 import { ConfigurationSource } from "../configuration-source.js";
 
 export class MemoryConfigurationSource extends ConfigurationSource {
-  constructor(config: Map<string, string>) {
+  constructor(config: Map<string, string | null>) {
     super();
     this.#config = config;
   }
 
-  #config: Map<string, string>;
+  #config: Map<string, string | null>;
 
   public get config() {
     return this.#config;

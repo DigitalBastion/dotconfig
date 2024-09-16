@@ -1,5 +1,7 @@
 import type { IConfigurationBuilder, IConfigurationProvider, IConfigurationSource } from "./abstractions.js";
 import { ConfigurationRoot } from "./configuration-root.js";
+import { EnvironmentSource } from "./providers/environment.js";
+import { MemoryConfigurationSource } from "./providers/memory.js";
 
 export class ConfigurationBuilder implements IConfigurationBuilder {
     #sources: IConfigurationSource[] = [];
@@ -15,6 +17,16 @@ export class ConfigurationBuilder implements IConfigurationBuilder {
 
     public add(source: IConfigurationSource): this {
         this.#sources.push(source);
+        return this;
+    }
+
+    public addEnvironmentVariables(delimiter?: string): this {
+        this.add(new EnvironmentSource({ delimiter }));
+        return this;
+    }
+
+    public addMemoryCollection(collection: Map<string, string | null>): this {
+        this.add(new MemoryConfigurationSource(collection));
         return this;
     }
 

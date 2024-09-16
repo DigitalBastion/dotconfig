@@ -1,6 +1,7 @@
 import type { IConfigurationProvider } from "./abstractions.js";
 import { ConfigurationData } from "./configuration-data.js";
 import { compare, KEY_DELIMITER } from "./configuration-path.js";
+import { filterCaseInsensitiveDuplicates } from "./utils/filter.js";
 
 export class ConfigurationProvider implements IConfigurationProvider {
     protected readonly data = new ConfigurationData();
@@ -14,27 +15,25 @@ export class ConfigurationProvider implements IConfigurationProvider {
     }
 
     public getChildKeys(earlierKeys: string[], parentPath?: string): string[] {
-        const results: string[] = [...earlierKeys];
+        const keys: string[] = [...earlierKeys];
 
         if (parentPath == null) {
             for (const [key] of this.data) {
-                results.push(this.segment(key, 0));
+                keys.push(this.segment(key, 0));
             }
 
-            results.sort(compare);
-            return results;
+            return filterCaseInsensitiveDuplicates(keys).sort(compare);
         }
 
         for (const [key] of this.data) {
             if (key.length > parentPath.length &&
                 key.toLowerCase().startsWith(parentPath.toLowerCase()) &&
                 key[parentPath.length] === KEY_DELIMITER) {
-                results.push(this.segment(key, parentPath.length + 1));
+                keys.push(this.segment(key, parentPath.length + 1));
             }
         }
 
-        results.sort(compare);
-        return results;
+        return filterCaseInsensitiveDuplicates(keys).sort(compare);
     }
 
     public load(): Promise<void> {

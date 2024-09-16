@@ -1,6 +1,17 @@
 import { expect, test } from "bun:test";
 import { CircularReferenceError, flatten } from "../../src/utils/flatten.js";
 
+test("Flattens empty nested keys.", () => {
+  const input = {
+    "": {
+      "": {
+        "": 1,
+      },
+    }
+  };
+  expect(flatten(input)).toMatchSnapshot();
+});
+
 test("Flattens a simple object.", () => {
   const input = { a: 1, b: { c: 2 }, d: [3, 4] };
   const expected = new Map([

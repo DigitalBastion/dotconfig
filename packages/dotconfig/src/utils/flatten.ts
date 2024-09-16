@@ -18,7 +18,7 @@ export function flatten(target: NestedObject, options: FlattenOptions = {}) {
   const result = new Map<string, Primitive>();
   const handledObjects = new WeakSet<NestedObject>();
 
-  const stack: Array<{ obj: NestedObject; prefix: string }> = [{ obj: target, prefix: "" }];
+  const stack: Array<{ obj: NestedObject; prefix: string | null }> = [{ obj: target, prefix: null }];
 
   while (stack.length > 0) {
     // biome-ignore lint/style/noNonNullAssertion: Check is done in while loop.
@@ -26,7 +26,7 @@ export function flatten(target: NestedObject, options: FlattenOptions = {}) {
 
     for (const key of Object.keys(obj)) {
       const value = obj[key];
-      const transformedKey = prefix !== "" ? prefix + delimiter + transformKey(key) : transformKey(key);
+      const transformedKey = prefix != null ? prefix + delimiter + transformKey(key) : transformKey(key);
 
       if (typeof value !== "object" || value === null) {
         result.set(transformedKey, value as Primitive);

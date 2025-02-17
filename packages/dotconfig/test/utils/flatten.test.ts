@@ -7,7 +7,7 @@ test("Flattens empty nested keys.", () => {
       "": {
         "": 1,
       },
-    }
+    },
   };
   expect(flatten(input)).toMatchSnapshot();
 });

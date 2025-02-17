@@ -1,17 +1,17 @@
 export function filterCaseInsensitiveDuplicates<T>(array: T[]): T[] {
-    const set = new Set<string>();
-    const result: T[] = [];
+  const set = new Set<string>();
+  const result: T[] = [];
 
-    for (const item of array) {
-        const key = String(item).toLowerCase();
+  for (const item of array) {
+    const key = String(item).toLowerCase();
 
-        if (set.has(key)) {
-            continue;
-        }
-
-        set.add(key);
-        result.push(item);
+    if (set.has(key)) {
+      continue;
     }
 
-    return result;
+    set.add(key);
+    result.push(item);
+  }
+
+  return result;
 }

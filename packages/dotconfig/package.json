@@ -26,13 +26,8 @@
     "test": "bun test",
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
   },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "bun",
-    "config"
-  ],
+  "files": ["dist"],
+  "keywords": ["bun", "config"],
   "license": "MIT",
   "homepage": "github.com/MartynasZilinskas/dotconfig#readme",
   "repository": {

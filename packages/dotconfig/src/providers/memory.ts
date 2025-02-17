@@ -15,7 +15,7 @@ export class MemoryConfigurationSource extends ConfigurationSource {
   }
 
   public async build(): Promise<IConfigurationProvider> {
-    const provider = new MemoryConfigurationProvider(this)
+    const provider = new MemoryConfigurationProvider(this);
     await provider.load();
 
     return provider;

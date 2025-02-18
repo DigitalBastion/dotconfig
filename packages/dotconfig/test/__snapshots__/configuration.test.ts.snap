@@ -33,12 +33,3 @@ exports[`Chained getConfigurationEntries flattens into dictionary (removePath: %
   "Mem3:KeyInMem3:Deep3": "ValueDeep3",
 }
 `;
-
-exports[`Get configuration nested object 1`] = `
-{
-  "0": "NoKeyValue1",
-  "Deep1": "ValueDeep1",
-  "KeyInMem1": "ValueInMem1",
-  "Mem1": "Value1",
-}
-`;

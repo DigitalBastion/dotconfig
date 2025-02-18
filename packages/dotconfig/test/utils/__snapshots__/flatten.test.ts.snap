@@ -2,6 +2,6 @@
 
 exports[`Flattens empty nested keys. 1`] = `
 Map {
-  "" => 1,
+  ".." => 1,
 }
 `;

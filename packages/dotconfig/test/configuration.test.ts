@@ -1,14 +1,10 @@
 import { test, expect, describe } from "bun:test";
+import { z } from "zod";
 import { MemoryConfigurationProvider, MemoryConfigurationSource } from "../src/providers/memory";
 import { ConfigurationBuilder } from "../src/configuration-builder";
 import { ChainedConfigurationProvider, ChainedConfigurationSource } from "../src/providers/chained-configuration";
 import { iterateConfigurationEntries } from "../src/helpers";
-import type {
-  IChangeToken,
-  IConfigurationBuilder,
-  IConfigurationProvider,
-  IConfigurationSource,
-} from "../src/abstractions";
+import type { IConfigurationBuilder, IConfigurationProvider, IConfigurationSource } from "../src/abstractions";
 
 test("Load and combine key value pairs from different configuration providers", async () => {
   const dic1 = new Map<string, string>([["Mem1:KeyInMem1", "ValueInMem1"]]);
@@ -664,4 +660,51 @@ test("Provider with null reload token", async () => {
 
   // Assert
   expect(config.getReloadToken()).not.toBeNull();
+});
+
+test("Get object from configuration", async () => {
+  // Arrange
+  const dict = new Map<string, string>([["Mem1:KeyInMem1", "ValueInMem1"]]);
+  const schema = z.object({
+    KeyInMem1: z.string(),
+  });
+
+  const configurationBuilder = new ConfigurationBuilder();
+  configurationBuilder.addMemoryCollection(dict);
+  const config = await configurationBuilder.build();
+
+  // Act
+  const obj = await config.getSection("Mem1").toObject(schema);
+
+  // Assert
+  expect(obj).toEqual({ KeyInMem1: "ValueInMem1" });
+});
+
+test("Get object from configuration when section has also value", async () => {
+  // Arrange
+  const dict = new Map<string, string>([
+    ["Mem1:KeyInMem1:A", "A"],
+    ["Mem1:KeyInMem1", "B"],
+  ]);
+  const schema1 = z.object({
+    KeyInMem1: z.object({
+      A: z.string(),
+    }),
+  });
+
+  const schema2 = z.object({
+    KeyInMem1: z.string(),
+  });
+
+  const configurationBuilder = new ConfigurationBuilder();
+  configurationBuilder.addMemoryCollection(dict);
+  const config = await configurationBuilder.build();
+
+  // Act
+  const obj1 = await config.getSection("Mem1").toObject(schema1);
+  const obj2 = async () => await config.getSection("Mem1").toObject(schema2);
+
+  // Assert
+  expect(obj1).toMatchSnapshot();
+  expect(obj2).toThrow();
 });

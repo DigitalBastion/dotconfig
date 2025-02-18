@@ -1,7 +1,8 @@
+import type { StandardSchemaV1 } from "@standard-schema/spec";
 import type { IChangeToken, IConfigurationRoot, IConfigurationSection } from "./abstractions.js";
 import { getSectionKey, combine } from "./configuration-path.js";
 import { ConfigurationTypeSymbol } from "./constants.js";
-import { configurationIterator } from "./utils.js";
+import { configurationIterator, parseConfiguration } from "./utils.js";
 
 export class ConfigurationSection implements IConfigurationSection {
   constructor(root: IConfigurationRoot, path: string) {
@@ -56,6 +57,10 @@ export class ConfigurationSection implements IConfigurationSection {
 
   public exists() {
     return this.value != null || this.getChildren().length > 0;
+  }
+
+  public toObject<T extends StandardSchemaV1>(schema: T): Promise<StandardSchemaV1.InferOutput<T>> {
+    return parseConfiguration(schema, this);
   }
 
   public [Symbol.iterator]() {

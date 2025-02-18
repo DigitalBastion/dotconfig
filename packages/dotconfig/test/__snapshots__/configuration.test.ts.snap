@@ -33,3 +33,11 @@ exports[`Chained getConfigurationEntries flattens into dictionary (removePath: %
   "Mem3:KeyInMem3:Deep3": "ValueDeep3",
 }
 `;
+
+exports[`Get object from configuration when section has also value 1`] = `
+{
+  "KeyInMem1": {
+    "A": "A",
+  },
+}
+`;

@@ -1,3 +1,4 @@
+import type { StandardSchemaV1 } from "@standard-schema/spec";
 import type { ConfigurationTypeSymbol } from "./constants.js";
 
 export interface IConfigurationBuilder {
@@ -69,6 +70,7 @@ export interface IConfigurationSection extends IConfiguration {
   value: string | null;
 
   exists(): boolean;
+  toObject<T extends StandardSchemaV1>(schema: T): Promise<StandardSchemaV1.InferOutput<T>>;
 }
 
 export interface IConfigurationProvider {

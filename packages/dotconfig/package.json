@@ -26,8 +26,13 @@
     "test": "bun test",
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
   },
-  "files": ["dist"],
-  "keywords": ["bun", "config"],
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "bun",
+    "config"
+  ],
   "license": "MIT",
   "homepage": "github.com/MartynasZilinskas/dotconfig#readme",
   "repository": {
@@ -36,9 +41,13 @@
   },
   "bugs": "github.com/MartynasZilinskas/dotconfig/issues",
   "author": "Martynas Zilinskas <hello@martynas.me>",
+  "dependencies": {
+    "@standard-schema/spec": "^1.0.0"
+  },
   "devDependencies": {
     "@types/bun": "1.0.0",
     "typescript": "5.2.2",
-    "@arethetypeswrong/cli": "0.16.2"
+    "@arethetypeswrong/cli": "0.16.2",
+    "zod": "3.24.2"
   }
 }

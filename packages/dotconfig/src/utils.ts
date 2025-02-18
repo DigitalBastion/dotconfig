@@ -1,3 +1,4 @@
+import type { StandardSchemaV1 } from "@standard-schema/spec";
 import type { IConfiguration, IConfigurationRoot, IConfigurationSection } from "./abstractions.js";
 import { ConfigurationTypeSymbol } from "./constants.js";
 
@@ -15,6 +16,45 @@ export function* configurationIterator(configuration: IConfiguration): Iterator<
       stack.push(child);
     }
   }
+}
+
+export async function parseConfiguration<T extends StandardSchemaV1>(
+  schema: T,
+  configuration: IConfiguration,
+): Promise<StandardSchemaV1.InferOutput<T>> {
+  let result = schema["~standard"].validate(getConfigurationProxy(configuration));
+  if (result instanceof Promise) {
+    result = await result;
+  }
+
+  if (result.issues != null) {
+    throw new Error(`Configuration validation failed: ${JSON.stringify(result.issues)}`);
+  }
+
+  return result.value;
+}
+
+function getConfigurationProxy(configuration: IConfiguration, parentPath: string | null = null) {
+  const configurationProxy = new Proxy(
+    {},
+    {
+      get(_, getKey) {
+        if (typeof getKey === "symbol" || getKey === "then") {
+          return undefined;
+        }
+
+        const key = parentPath == null ? getKey : `${parentPath}:${getKey}`;
+        if (configuration.getSection(key).getChildren().length > 0) {
+          return getConfigurationProxy(configuration.getSection(key), key);
+        }
+
+        const value = configuration.get(getKey);
+        return value;
+      },
+    },
+  );
+
+  return configurationProxy;
 }
 
 export function isConfigurationSection(config: IConfiguration): config is IConfigurationSection {

@@ -27,7 +27,7 @@ export interface IConfiguration {
    * Gets the immediate descendant configuration sub-sections.
    */
   getChildren(key?: string): IConfigurationSection[];
-  getReloadToken(): unknown;
+  getReloadToken(): IChangeToken;
 }
 
 export interface IConfigurationRoot extends IConfiguration {
@@ -72,9 +72,28 @@ export interface IConfigurationProvider {
    */
   load(): Promise<void>;
 
-  getReloadToken(): unknown;
+  getReloadToken(): IChangeToken;
 }
 
 export interface IConfigurationSource {
   build(builder: IConfigurationBuilder): Promise<IConfigurationProvider>;
+}
+
+export interface IChangeToken {
+  /**
+   * Gets a value that indicates if a change has occurred.
+   */
+  hasChanged: boolean;
+  /**
+   * Indicates if this token will proactively raise callbacks. If `false`, the token consumer must poll {@link hasChanged} to detect changes.
+   */
+  activeChangeCallbacks: boolean;
+  /**
+   * Registers for a callback that will be invoked when the entry has changed.
+   * {@link hasChanged} MUST be set before the callback is invoked.
+   *
+   * @param callback  The callback to invoke.
+   * @returns A function that can be used to unregister the callback.
+   */
+  registerChangeCallback: (callback: (state?: unknown) => void, state?: unknown) => Disposable;
 }

@@ -1,10 +1,12 @@
-import type { IConfigurationProvider } from "./abstractions.js";
+import type { IChangeToken, IConfigurationProvider } from "./abstractions.js";
 import { ConfigurationData } from "./configuration-data.js";
 import { compare, KEY_DELIMITER } from "./configuration-path.js";
+import { ConfigurationReloadToken } from "./configuration-reload-token.js";
 import { filterCaseInsensitiveDuplicates } from "./utils/filter.js";
 
 export class ConfigurationProvider implements IConfigurationProvider {
   protected readonly data = new ConfigurationData();
+  #reloadToken = new ConfigurationReloadToken();
 
   public get(key: string): string | null | undefined {
     return this.data.get(key);
@@ -42,8 +44,14 @@ export class ConfigurationProvider implements IConfigurationProvider {
     return Promise.resolve();
   }
 
-  public getReloadToken(): unknown {
-    return null;
+  public getReloadToken(): IChangeToken {
+    return this.#reloadToken;
+  }
+
+  protected onReload(): void {
+    const previousToken = this.#reloadToken;
+    this.#reloadToken = new ConfigurationReloadToken();
+    previousToken.onReload();
   }
 
   private segment(key: string, prefixLength: number): string {

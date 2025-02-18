@@ -25,3 +25,11 @@ export function* iterateConfigurationEntries(
 function isConfigurationSection(config: IConfiguration): config is IConfigurationSection {
   return "path" in config && "value" in config;
 }
+
+export function dispose(instance: unknown): void {
+  if (typeof instance !== "object" || instance === null) {
+    return;
+  }
+
+  (instance as Disposable)[Symbol.dispose]?.();
+}

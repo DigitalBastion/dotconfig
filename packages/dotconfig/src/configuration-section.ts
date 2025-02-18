@@ -1,4 +1,4 @@
-import type { IConfigurationRoot, IConfigurationSection } from "./abstractions.js";
+import type { IChangeToken, IConfigurationRoot, IConfigurationSection } from "./abstractions.js";
 import { getSectionKey, combine } from "./configuration-path.js";
 
 export class ConfigurationSection implements IConfigurationSection {
@@ -42,7 +42,7 @@ export class ConfigurationSection implements IConfigurationSection {
     return this.#root.getChildren(this.#path);
   }
 
-  public getReloadToken(): unknown {
-    throw new Error("Method not implemented.");
+  public getReloadToken(): IChangeToken {
+    return this.#root.getReloadToken();
   }
 }

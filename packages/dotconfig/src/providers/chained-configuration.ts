@@ -48,7 +48,7 @@ export class ChainedConfigurationProvider implements IConfigurationProvider {
     return Promise.resolve();
   }
 
-  public getReloadToken(): unknown {
+  public getReloadToken() {
     return this.#source.configuration.getReloadToken();
   }
 }

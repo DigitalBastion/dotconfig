@@ -1,13 +1,27 @@
 import type { IConfigurationProvider, IConfigurationRoot, IConfigurationSection } from "./abstractions.js";
+import { createChangeToken } from "./change-token.js";
 import { combine } from "./configuration-path.js";
+import { ConfigurationReloadToken } from "./configuration-reload-token.js";
 import { ConfigurationSection } from "./configuration-section.js";
+import { dispose } from "./helpers.js";
 
-export class ConfigurationRoot implements IConfigurationRoot {
+export class ConfigurationRoot implements IConfigurationRoot, Disposable {
   public constructor(providers: IConfigurationProvider[]) {
     this.#providers = providers;
+
+    for (const provider of providers) {
+      this.#changeTokenRegistrations.push(
+        createChangeToken(
+          () => provider.getReloadToken(),
+          () => this.raiseChanged(),
+        ),
+      );
+    }
   }
 
   #providers: IConfigurationProvider[];
+  #changeToken = new ConfigurationReloadToken();
+  #changeTokenRegistrations: Disposable[] = [];
 
   public get providers() {
     return this.#providers;
@@ -41,11 +55,17 @@ export class ConfigurationRoot implements IConfigurationRoot {
   }
 
   public async reload(): Promise<void> {
-    // TODO: Fix.
-
     for (const provider of this.#providers) {
       await provider.load();
     }
+
+    this.raiseChanged();
+  }
+
+  private raiseChanged() {
+    const previousToken = this.#changeToken;
+    this.#changeToken = new ConfigurationReloadToken();
+    previousToken.onReload();
   }
 
   public getChildren(path?: string): IConfigurationSection[] {
@@ -55,6 +75,16 @@ export class ConfigurationRoot implements IConfigurationRoot {
   }
 
   public getReloadToken() {
-    throw new Error("Method not implemented.");
+    return this.#changeToken;
+  }
+
+  public [Symbol.dispose](): void {
+    for (const registration of this.#changeTokenRegistrations) {
+      registration[Symbol.dispose]();
+    }
+
+    for (const provider of this.#providers) {
+      dispose(provider);
+    }
   }
 }

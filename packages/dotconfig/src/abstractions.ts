@@ -1,3 +1,5 @@
+import type { ConfigurationTypeSymbol } from "./constants.js";
+
 export interface IConfigurationBuilder {
   /**
    * Gets a key/value collection that can be used to share data between the {@link IConfigurationBuilder}
@@ -11,7 +13,8 @@ export interface IConfigurationBuilder {
   build(): Promise<IConfigurationRoot>;
 }
 
-export interface IConfiguration {
+export interface IConfiguration extends Iterable<[string, string | null]> {
+  [ConfigurationTypeSymbol]: "root" | "section";
   get(key: string): string | null;
   set(key: string, value: string | null): void;
   /**
@@ -24,6 +27,15 @@ export interface IConfiguration {
    */
   getSection(key: string): IConfigurationSection;
   /**
+   * Gets a configuration subsection with the specified key.
+   * @param key The key of the configuration section.
+   *
+   * @remarks
+   *
+   * If no matching sub-section is found with the specified key, an exception is raised.
+   */
+  getRequiredSection(key: string): IConfigurationSection;
+  /**
    * Gets the immediate descendant configuration sub-sections.
    */
   getChildren(key?: string): IConfigurationSection[];
@@ -31,6 +43,7 @@ export interface IConfiguration {
 }
 
 export interface IConfigurationRoot extends IConfiguration {
+  [ConfigurationTypeSymbol]: "root";
   /**
    * Gets the {@link IConfigurationProvider} providers for this configuration.
    */
@@ -43,6 +56,7 @@ export interface IConfigurationRoot extends IConfiguration {
 }
 
 export interface IConfigurationSection extends IConfiguration {
+  [ConfigurationTypeSymbol]: "section";
   /**
    * Gets the key this section occupies in its parent.
    */
@@ -53,6 +67,8 @@ export interface IConfigurationSection extends IConfiguration {
   readonly path: string;
 
   value: string | null;
+
+  exists(): boolean;
 }
 
 export interface IConfigurationProvider {
@@ -72,7 +88,7 @@ export interface IConfigurationProvider {
    */
   load(): Promise<void>;
 
-  getReloadToken(): IChangeToken;
+  getReloadToken(): IChangeToken | null;
 }
 
 export interface IConfigurationSource {

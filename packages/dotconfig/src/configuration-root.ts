@@ -3,7 +3,9 @@ import { createChangeToken } from "./change-token.js";
 import { combine } from "./configuration-path.js";
 import { ConfigurationReloadToken } from "./configuration-reload-token.js";
 import { ConfigurationSection } from "./configuration-section.js";
+import { ConfigurationTypeSymbol } from "./constants.js";
 import { dispose } from "./helpers.js";
+import { configurationIterator } from "./utils.js";
 
 export class ConfigurationRoot implements IConfigurationRoot, Disposable {
   public constructor(providers: IConfigurationProvider[]) {
@@ -22,6 +24,8 @@ export class ConfigurationRoot implements IConfigurationRoot, Disposable {
   #providers: IConfigurationProvider[];
   #changeToken = new ConfigurationReloadToken();
   #changeTokenRegistrations: Disposable[] = [];
+
+  readonly [ConfigurationTypeSymbol] = "root";
 
   public get providers() {
     return this.#providers;
@@ -54,6 +58,16 @@ export class ConfigurationRoot implements IConfigurationRoot, Disposable {
     return new ConfigurationSection(this, key);
   }
 
+  public getRequiredSection(key: string): IConfigurationSection {
+    const section = this.getSection(key);
+
+    if (!section.exists()) {
+      throw new Error(`No configuration section found with the key: ${key}`);
+    }
+
+    return section;
+  }
+
   public async reload(): Promise<void> {
     for (const provider of this.#providers) {
       await provider.load();
@@ -76,6 +90,10 @@ export class ConfigurationRoot implements IConfigurationRoot, Disposable {
 
   public getReloadToken() {
     return this.#changeToken;
+  }
+
+  public [Symbol.iterator]() {
+    return configurationIterator(this);
   }
 
   public [Symbol.dispose](): void {

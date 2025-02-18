@@ -1,11 +1,15 @@
 import type { IChangeToken, IConfigurationRoot, IConfigurationSection } from "./abstractions.js";
 import { getSectionKey, combine } from "./configuration-path.js";
+import { ConfigurationTypeSymbol } from "./constants.js";
+import { configurationIterator } from "./utils.js";
 
 export class ConfigurationSection implements IConfigurationSection {
   constructor(root: IConfigurationRoot, path: string) {
     this.#root = root;
     this.#path = path;
   }
+
+  readonly [ConfigurationTypeSymbol] = "section";
 
   #root: IConfigurationRoot;
   #path: string;
@@ -38,11 +42,23 @@ export class ConfigurationSection implements IConfigurationSection {
     return this.#root.getSection(combine(this.#path, key));
   }
 
+  public getRequiredSection(key: string) {
+    return this.#root.getRequiredSection(combine(this.#path, key));
+  }
+
   public getChildren(): IConfigurationSection[] {
     return this.#root.getChildren(this.#path);
   }
 
   public getReloadToken(): IChangeToken {
     return this.#root.getReloadToken();
+  }
+
+  public exists() {
+    return this.value != null || this.getChildren().length > 0;
+  }
+
+  public [Symbol.iterator]() {
+    return configurationIterator(this);
   }
 }

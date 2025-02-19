@@ -17,6 +17,14 @@
     "./abstractions": {
       "default": "./dist/abstractions.js",
       "types": "./dist/abstractions.d.ts"
+    },
+    "./utils": {
+      "default": "./dist/utils.js",
+      "types": "./dist/utils.d.ts"
+    },
+    "./errors": {
+      "default": "./dist/errors.js",
+      "types": "./dist/errors.d.ts"
     }
   },
   "description": "",

@@ -1,6 +1,7 @@
 import type { StandardSchemaV1 } from "@standard-schema/spec";
 import type { IConfiguration, IConfigurationRoot, IConfigurationSection } from "./abstractions.js";
 import { ConfigurationTypeSymbol } from "./constants.js";
+import { ParseErrors } from "./errors.js";
 
 export function* configurationIterator(configuration: IConfiguration): Iterator<[string, string | null]> {
   const stack: IConfiguration[] = [configuration];
@@ -20,7 +21,7 @@ export function* configurationIterator(configuration: IConfiguration): Iterator<
 
 export async function parseConfiguration<T extends StandardSchemaV1>(
   schema: T,
-  configuration: IConfiguration,
+  configuration: IConfigurationSection,
 ): Promise<StandardSchemaV1.InferOutput<T>> {
   let result = schema["~standard"].validate(getConfigurationProxy(configuration));
   if (result instanceof Promise) {
@@ -28,7 +29,7 @@ export async function parseConfiguration<T extends StandardSchemaV1>(
   }
 
   if (result.issues != null) {
-    throw new Error(`Configuration validation failed: ${JSON.stringify(result.issues)}`);
+    throw new ParseErrors(result.issues, { configurationPath: configuration.path });
   }
 
   return result.value;

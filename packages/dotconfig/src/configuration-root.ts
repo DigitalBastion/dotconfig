@@ -4,6 +4,7 @@ import { combine } from "./configuration-path.js";
 import { ConfigurationReloadToken } from "./configuration-reload-token.js";
 import { ConfigurationSection } from "./configuration-section.js";
 import { ConfigurationTypeSymbol } from "./constants.js";
+import { ProviderRegistryEmptyError, SectionNotFoundError } from "./errors.js";
 import { dispose } from "./helpers.js";
 import { configurationIterator } from "./utils.js";
 
@@ -46,7 +47,7 @@ export class ConfigurationRoot implements IConfigurationRoot, Disposable {
 
   public set(key: string, value: string | null): void {
     if (this.#providers.length === 0) {
-      throw new Error("No providers are available.");
+      throw new ProviderRegistryEmptyError();
     }
 
     for (const provider of this.#providers) {
@@ -62,7 +63,7 @@ export class ConfigurationRoot implements IConfigurationRoot, Disposable {
     const section = this.getSection(key);
 
     if (!section.exists()) {
-      throw new Error(`No configuration section found with the key: ${key}`);
+      throw new SectionNotFoundError(key);
     }
 
     return section;

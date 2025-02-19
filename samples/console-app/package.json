@@ -1,0 +1,12 @@
+{
+    "name": "console-app",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "start": "bun ./src/index.ts"
+    },
+    "dependencies": {
+        "@digitalbastion/dotconfig": "workspace:*",
+        "zod": "3.24.2"
+    }
+}

@@ -1,5 +1,11 @@
-import type { IConfiguration, IConfigurationSection } from "./abstractions.js";
+import type { IConfiguration } from "./abstractions.js";
+import { isConfigurationSection } from "./utils.js";
 
+/**
+ * Get the iterator of key-value pairs for the configuration.
+ * @param configuration The configuration to iterate.
+ * @param makePathsRelative `true` to trim the current configuration's path from the front of the returned child keys.
+ */
 export function* iterateConfigurationEntries(
   configuration: IConfiguration,
   makePathsRelative = false,
@@ -22,9 +28,6 @@ export function* iterateConfigurationEntries(
   }
 }
 
-function isConfigurationSection(config: IConfiguration): config is IConfigurationSection {
-  return "path" in config && "value" in config;
-}
 
 export function dispose(instance: unknown): void {
   if (typeof instance !== "object" || instance === null) {

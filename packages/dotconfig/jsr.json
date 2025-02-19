@@ -1,5 +1,5 @@
 {
-    "name": "@digitalb/dotconfig",
+    "name": "@digitalbastion/dotconfig",
     "version": "0.1.0-alpha.0",
     "exports": {
         ".": "./src/index.ts",

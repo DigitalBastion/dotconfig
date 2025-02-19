@@ -3,6 +3,10 @@ import type { IConfiguration, IConfigurationRoot, IConfigurationSection } from "
 import { ConfigurationTypeSymbol } from "./constants.js";
 import { ParseErrors } from "./errors.js";
 
+/**
+ * Get the iterator of key-value pairs for the configuration.
+ * @param configuration The configuration to iterate.
+ */
 export function* configurationIterator(configuration: IConfiguration): Iterator<[string, string | null]> {
   const stack: IConfiguration[] = [configuration];
 
@@ -19,6 +23,11 @@ export function* configurationIterator(configuration: IConfiguration): Iterator<
   }
 }
 
+/**
+ * Parse the configuration using the schema.
+ * @param schema The schema to use for parsing.
+ * @param configuration The configuration to parse.
+ */
 export async function parseConfiguration<T extends StandardSchemaV1>(
   schema: T,
   configuration: IConfigurationSection,
@@ -58,10 +67,18 @@ function getConfigurationProxy(configuration: IConfiguration, parentPath: string
   return configurationProxy;
 }
 
+/**
+ * Checks if the configuration is a section.
+ * @param config The configuration to check.
+ */
 export function isConfigurationSection(config: IConfiguration): config is IConfigurationSection {
   return config[ConfigurationTypeSymbol] === "section";
 }
 
+/**
+ * Checks if the configuration is a root.
+ * @param config The configuration to check.
+ */
 export function isConfigurationRoot(config: IConfiguration): config is IConfigurationRoot {
   return config[ConfigurationTypeSymbol] === "root";
 }

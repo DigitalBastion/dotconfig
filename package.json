@@ -1,7 +1,7 @@
 {
   "name": "dotconfig-workspace",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": ["packages/*", "samples/*"],
   "scripts": {
     "biome": "biome",
     "lint": "sherif && dprint check && biome lint",

@@ -16,7 +16,16 @@ export interface IConfigurationBuilder {
 
 export interface IConfiguration extends Iterable<[string, string | null]> {
   [ConfigurationTypeSymbol]: "root" | "section";
+  /**
+   * Gets the configuration value with the specified key.
+   * @param key The key of the configuration value.
+   */
   get(key: string): string | null;
+  /**
+   * Sets the configuration value with the specified key.
+   * @param key The key of the configuration value.
+   * @param value The value of the configuration.
+   */
   set(key: string, value: string | null): void;
   /**
    * Gets a configuration sub-section with the specified key.
@@ -70,6 +79,10 @@ export interface IConfigurationSection extends IConfiguration {
   value: string | null;
 
   exists(): boolean;
+  /**
+   * Converts the configuration section to an object using the provided schema.
+   * @param schema The schema to use for conversion.
+   */
   toObject<T extends StandardSchemaV1>(schema: T): Promise<StandardSchemaV1.InferOutput<T>>;
 }
 

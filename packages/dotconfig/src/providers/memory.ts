@@ -3,15 +3,15 @@ import { ConfigurationProvider } from "../configuration-provider.js";
 import { ConfigurationSource } from "../configuration-source.js";
 
 export class MemoryConfigurationSource extends ConfigurationSource {
-  constructor(config: Map<string, string | null>) {
+  constructor(initialData: Map<string, string | null>) {
     super();
-    this.#config = config;
+    this.#initialData = initialData;
   }
 
-  #config: Map<string, string | null>;
+  #initialData: Map<string, string | null>;
 
-  public get config(): Map<string, string | null> {
-    return this.#config;
+  public get initialData(): Map<string, string | null> {
+    return this.#initialData;
   }
 
   public async build(): Promise<IConfigurationProvider> {
@@ -31,7 +31,7 @@ export class MemoryConfigurationProvider extends ConfigurationProvider {
   #source: MemoryConfigurationSource;
 
   public override load(): Promise<void> {
-    for (const [key, value] of this.#source.config) {
+    for (const [key, value] of this.#source.initialData) {
       this.set(key, value);
     }
 

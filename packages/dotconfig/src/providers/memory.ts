@@ -10,7 +10,7 @@ export class MemoryConfigurationSource extends ConfigurationSource {
 
   #config: Map<string, string | null>;
 
-  public get config() {
+  public get config(): Map<string, string | null> {
     return this.#config;
   }
 

@@ -1,4 +1,4 @@
-import type { IConfiguration, IConfigurationProvider, IConfigurationSource } from "../abstractions.js";
+import type { IChangeToken, IConfiguration, IConfigurationProvider, IConfigurationSource } from "../abstractions.js";
 import { compare } from "../configuration-path.js";
 
 export class ChainedConfigurationSource implements IConfigurationSource {
@@ -8,11 +8,11 @@ export class ChainedConfigurationSource implements IConfigurationSource {
 
   #configuration: IConfiguration;
 
-  public get configuration() {
+  public get configuration(): IConfiguration {
     return this.#configuration;
   }
 
-  public async build() {
+  public async build(): Promise<IConfigurationProvider> {
     return new ChainedConfigurationProvider(this);
   }
 }
@@ -48,7 +48,7 @@ export class ChainedConfigurationProvider implements IConfigurationProvider {
     return Promise.resolve();
   }
 
-  public getReloadToken() {
+  public getReloadToken(): IChangeToken {
     return this.#source.configuration.getReloadToken();
   }
 }

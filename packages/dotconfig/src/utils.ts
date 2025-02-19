@@ -35,7 +35,7 @@ export async function parseConfiguration<T extends StandardSchemaV1>(
   return result.value;
 }
 
-function getConfigurationProxy(configuration: IConfiguration, parentPath: string | null = null) {
+function getConfigurationProxy(configuration: IConfiguration, parentPath: string | null = null): unknown {
   const configurationProxy = new Proxy(
     {},
     {

@@ -63,7 +63,7 @@ export class ConfigurationSection implements IConfigurationSection {
     return parseConfiguration(schema, this);
   }
 
-  public [Symbol.iterator]() {
+  public [Symbol.iterator](): Iterator<[string, string | null]> {
     return configurationIterator(this);
   }
 }

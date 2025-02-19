@@ -1,4 +1,4 @@
-import type { IConfigurationProvider, IConfigurationRoot, IConfigurationSection } from "./abstractions.js";
+import type { IChangeToken, IConfigurationProvider, IConfigurationRoot, IConfigurationSection } from "./abstractions.js";
 import { createChangeToken } from "./change-token.js";
 import { combine } from "./configuration-path.js";
 import { ConfigurationReloadToken } from "./configuration-reload-token.js";
@@ -28,7 +28,7 @@ export class ConfigurationRoot implements IConfigurationRoot, Disposable {
 
   readonly [ConfigurationTypeSymbol] = "root";
 
-  public get providers() {
+  public get providers(): IConfigurationProvider[] {
     return this.#providers;
   }
 
@@ -89,11 +89,11 @@ export class ConfigurationRoot implements IConfigurationRoot, Disposable {
       .map((key) => this.getSection(path == null ? key : combine(path, key)));
   }
 
-  public getReloadToken() {
+  public getReloadToken(): IChangeToken {
     return this.#changeToken;
   }
 
-  public [Symbol.iterator]() {
+  public [Symbol.iterator](): Iterator<[string, string | null]> {
     return configurationIterator(this);
   }
 

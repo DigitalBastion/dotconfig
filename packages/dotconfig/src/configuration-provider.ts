@@ -5,8 +5,8 @@ import { ConfigurationReloadToken } from "./configuration-reload-token.js";
 import { filterCaseInsensitiveDuplicates } from "./utils/filter.js";
 
 export class ConfigurationProvider implements IConfigurationProvider {
-  protected readonly data = new ConfigurationData();
-  #reloadToken = new ConfigurationReloadToken();
+  protected readonly data: ConfigurationData = new ConfigurationData();
+  #reloadToken: ConfigurationReloadToken = new ConfigurationReloadToken();
 
   public get(key: string): string | null | undefined {
     return this.data.get(key);

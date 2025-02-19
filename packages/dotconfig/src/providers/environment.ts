@@ -17,11 +17,11 @@ export class EnvironmentSource extends ConfigurationSource {
   #delimiter: string;
   #environmentVariables: NodeJS.ProcessEnv;
 
-  public get environmentVariables() {
+  public get environmentVariables(): NodeJS.ProcessEnv {
     return this.#environmentVariables;
   }
 
-  public get delimiter() {
+  public get delimiter(): string {
     return this.#delimiter;
   }
 

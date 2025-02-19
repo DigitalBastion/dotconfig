@@ -7,11 +7,11 @@ export class ConfigurationBuilder implements IConfigurationBuilder {
   #sources: IConfigurationSource[] = [];
   #properties = new Map<string, unknown>();
 
-  public get sources() {
+  public get sources(): IConfigurationSource[] {
     return this.#sources;
   }
 
-  public get properties() {
+  public get properties(): Map<string, unknown> {
     return this.#properties;
   }
 
@@ -30,7 +30,7 @@ export class ConfigurationBuilder implements IConfigurationBuilder {
     return this;
   }
 
-  public async build() {
+  public async build(): Promise<ConfigurationRoot> {
     const providerPromises: Array<Promise<IConfigurationProvider>> = this.#sources.map((source) => source.build(this));
     const providers = await Promise.all(providerPromises);
     return new ConfigurationRoot(providers);

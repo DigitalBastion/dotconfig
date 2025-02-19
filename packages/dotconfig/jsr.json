@@ -1,0 +1,13 @@
+{
+    "name": "@digitalb/dotconfig",
+    "version": "0.1.0-alpha.0",
+    "exports": {
+        ".": "./src/index.ts",
+        "./providers/chained-configuration": "./src/providers/chained-configuration.ts",
+        "./providers/environment": "./src/providers/environment.ts",
+        "./providers/memory": "./src/providers/memory.ts",
+        "./abstractions": "./src/abstractions.ts",
+        "./utils": "./src/utils.ts",
+        "./errors": "./src/errors.ts"
+    }
+}

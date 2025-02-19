@@ -10,10 +10,8 @@
     "test": "bun --filter '*' test"
   },
   "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "dependencies": {
     "@biomejs/biome": "1.8.3",
+    "@types/bun": "latest",
     "dprint": "0.47.2",
     "sherif": "1.0.0"
   },

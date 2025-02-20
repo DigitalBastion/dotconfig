@@ -41,3 +41,16 @@ exports[`Get object from configuration when section has also value 1`] = `
   },
 }
 `;
+
+exports[`Iterate configuration entries 1`] = `
+[
+  [
+    "Mem1",
+    null,
+  ],
+  [
+    "Mem1:KeyInMem1",
+    "ValueInMem1",
+  ],
+]
+`;

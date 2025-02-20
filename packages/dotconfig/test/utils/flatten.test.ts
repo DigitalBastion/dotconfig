@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { CircularReferenceError, flatten } from "../../src/utils/flatten.js";
+import { CircularReferenceError, flatten } from "../../src/utils.js";
 
 test("Flattens empty nested keys.", () => {
   const input = {

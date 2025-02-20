@@ -12,9 +12,9 @@ export class ConfigurationReloadToken implements IChangeToken {
     return this.#activeChangeCallbacks;
   }
 
-  public registerChangeCallback(callback: () => void) {
+  public registerChangeCallback(callback: (state?: unknown) => void, state?: unknown): Disposable {
     const wrappedCallback = () => {
-      callback();
+      callback(state);
       this.#activeChangeCallbacks = false;
     };
 

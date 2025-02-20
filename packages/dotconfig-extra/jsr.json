@@ -1,0 +1,9 @@
+{
+    "name": "@digitalbastion/dotconfig-extra",
+    "version": "0.1.0-alpha.0",
+    "exports": {
+        "./file-configuration": "./src/file-configuration.ts",
+        "./errors": "./src/errors.ts",
+        "./providers/json": "./src/providers/json.ts"
+    }
+}

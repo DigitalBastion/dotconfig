@@ -1,0 +1,44 @@
+{
+  "name": "@digitalbastion/dotconfig-extra",
+  "version": "0.1.0-alpha.0",
+  "type": "module",
+  "exports": {
+    "./providers/*": {
+      "default": "./dist/providers/*",
+      "types": "./dist/providers/*"
+    },
+    "./file-configuration-provider": {
+      "default": "./dist/file-configuration-provider.js",
+      "types": "./dist/file-configuration-provider.d.ts"
+    }
+  },
+  "description": "Extra providers for dotconfig.",
+  "scripts": {
+    "build": "tsc -p . ",
+    "prepublishOnly": "bun run build",
+    "test": "bun test"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "bun",
+    "config"
+  ],
+  "license": "MIT",
+  "homepage": "github.com/DigitalBastion/dotconfig#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+github.com/DigitalBastion/dotconfig.git"
+  },
+  "bugs": "github.com/DigitalBastion/dotconfig/issues",
+  "author": "Martynas Zilinskas <hello@martynas.me>",
+  "dependencies": {
+    "@digitalbastion/dotconfig": "workspace:*",
+    "chokidar": "4.0.3"
+  },
+  "devDependencies": {
+    "@types/bun": "1.0.0",
+    "typescript": "5.2.2"
+  }
+}

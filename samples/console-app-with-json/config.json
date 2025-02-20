@@ -1,0 +1,6 @@
+{
+    "postgres": {
+        "ConnectionString": "postgresql://myuser:mypass@myhost:5432",
+        "Database": "testing3"
+    }
+}

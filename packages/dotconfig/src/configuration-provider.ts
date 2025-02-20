@@ -2,7 +2,7 @@ import type { IChangeToken, IConfigurationProvider } from "./abstractions.js";
 import { ConfigurationData } from "./configuration-data.js";
 import { compare, KEY_DELIMITER } from "./configuration-path.js";
 import { ConfigurationReloadToken } from "./configuration-reload-token.js";
-import { filterCaseInsensitiveDuplicates } from "./utils/filter.js";
+import { filterCaseInsensitiveDuplicates } from "./helpers.js";
 
 export class ConfigurationProvider implements IConfigurationProvider {
   protected readonly data: ConfigurationData = new ConfigurationData();

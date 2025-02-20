@@ -3,6 +3,10 @@
     "version": "0.1.0-alpha.0",
     "exports": {
         ".": "./src/index.ts",
+        "./configuration-source.ts": "./src/configuration-source.ts",
+        "./configuration-provider.ts": "./src/configuration-provider.ts",
+        "./configuration-root.ts": "./src/configuration-root.ts",
+        "./configuration-section.ts": "./src/configuration-section.ts",
         "./providers/chained-configuration": "./src/providers/chained-configuration.ts",
         "./providers/environment": "./src/providers/environment.ts",
         "./providers/memory": "./src/providers/memory.ts",

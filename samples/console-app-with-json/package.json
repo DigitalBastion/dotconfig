@@ -1,0 +1,14 @@
+{
+    "name": "console-app-with-json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "start": "bun ./src/index.ts",
+        "build": "tsc"
+    },
+    "dependencies": {
+        "@digitalbastion/dotconfig": "workspace:*",
+        "@digitalbastion/dotconfig-extra": "workspace:*",
+        "zod": "3.24.2"
+    }
+}

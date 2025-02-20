@@ -24,6 +24,22 @@
     "./errors": {
       "default": "./dist/errors.js",
       "types": "./dist/errors.d.ts"
+    },
+    "./configuration-source": {
+      "default": "./dist/configuration-source.js",
+      "types": "./dist/configuration-source.d.ts"
+    },
+    "./configuration-provider": {
+      "default": "./dist/configuration-provider.js",
+      "types": "./dist/configuration-provider.d.ts"
+    },
+    "./configuration-root": {
+      "default": "./dist/configuration-root.js",
+      "types": "./dist/configuration-root.d.ts"
+    },
+    "./configuration-section": {
+      "default": "./dist/configuration-section.js",
+      "types": "./dist/configuration-section.d.ts"
     }
   },
   "description": "A powerful configuration builder using various sources.",
@@ -32,8 +48,13 @@
     "prepublishOnly": "bun run build",
     "test": "bun test"
   },
-  "files": ["dist"],
-  "keywords": ["bun", "config"],
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "bun",
+    "config"
+  ],
   "license": "MIT",
   "homepage": "github.com/DigitalBastion/dotconfig#readme",
   "repository": {
